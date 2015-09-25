@@ -4,6 +4,7 @@
 ** npm install -g grunt-cli
 ** npm install -g bower
 * Maven ist installiert und im Path vorhanden
+** changedistiller im lokalen Repo ablegen
 * Elasticsearch:
 ** Download der aktuellen Version
 ** Ausführen: ..\elasticsearch-1.7.2\bin\service install
