@@ -1,0 +1,32 @@
+server:
+    port: 8080
+
+spring:
+    profiles:
+        active: dev
+    mvc:
+        favicon:
+            enabled: false
+    data:
+        elasticsearch:
+            cluster-name: elasticsearch
+            cluster-nodes: localhost:9300
+            
+client:
+    transport:
+        sniff: false
+
+async:
+    corePoolSize: 2
+    maxPoolSize: 50
+    queueCapacity: 10000
+
+swagger:
+    title: hganalyzer
+    description: hganalyzer
+    version: 0.0.1
+    contact:
+    license: Apache 2.0
+    licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
+    
+

@@ -1,0 +1,124 @@
+<div>
+
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="queryText" class="col-sm-2 col-lg-2 control-label">Search
+				Text</label>
+
+			<div class="col-sm-6  col-lg-6">
+				<div class="input-group">
+					<input id="queryText" type="search" class="form-control"
+						ng-model="vm.query.searchText" placeholder="Search Text"
+						ng-change="vm.search()"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="vm.clearCriteria('searchText')">
+							<span class="glyphicon glyphicon-remove-circle"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-if="vm.query.path">
+			<label for="queryPath" class="col-sm-2 col-lg-2 control-label">File Path</label>
+
+			<div class="col-sm-6  col-lg-6">
+				<div class="input-group">
+					<input id="queryPath" type="search" class="form-control"
+						ng-model="vm.query.path" placeholder="File Path"
+						ng-change="vm.search()"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="vm.clearCriteria('path')">
+							<span class="glyphicon glyphicon-remove-circle"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-if="vm.query.changesetRevision">
+			<label for="queryChangeset" class="col-sm-2 col-lg-2 control-label">Changeset</label>
+
+			<div class="col-sm-6  col-lg-6">
+				<div class="input-group">
+					<input id="queryChangeset" type="search" class="form-control"
+						
+						ng-model="vm.query.changesetRevision"
+						ng-change="vm.search()"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="vm.clearCriteria('changesetRevision')">
+							<span class="glyphicon glyphicon-remove-circle"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="row marketing">
+		<ul class="list-group">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>File Path</th>
+						<th>Commit Date</th>
+						<th>Author</th>
+						<th>Comment</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat-start="fileRevision in vm.fileRevisions">
+						<th scope="row" class="br">
+							<button type="button" class="btn btn-primary btn-xs"
+								data-toggle="collapse" data-target="#revision-detail-{{$index}}">
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								Details
+							</button>
+						</th>
+						<td><a ng-click="vm.focusCriteria('path', fileRevision._source.path, true)">{{fileRevision._source.path}}</a></td>
+						<td>{{fileRevision._source.date | date: 'dd.MM.yyyy'}}</td>
+						<td>{{fileRevision._source.user}}</td>
+						<td><a ng-click="vm.focusCriteria('changesetRevision', fileRevision._source.changesetRevision, true)">{{fileRevision._source.comment | limitTo: 200}}</a><span
+							ng-if="fileRevision._source.comment.length>200">...</span></td>
+					</tr>
+					
+					<tr ng-repeat-end>
+						<td colspan="8" style="padding: 0;">
+							<div id="revision-detail-{{$index}}" class="collapse">
+								<div ui-codemirror ng-model="fileRevision._source.content" ng-if="fileRevision._source.content" ui-codemirror-opts="vm.editorOptions"></div>
+								<table class="table table-condensed" 
+									ng-if="fileRevision._source.changes">
+									<thead>
+										<tr>
+											<th>Significance Level</th>
+											<th>type</th>
+											<th>changeType</th>
+											<th>startPosition</th>
+											<th>endPosition</th>
+											<th>codeEntityType</th>
+											<th>content</th>
+											<th>newContent</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											ng-repeat="change in fileRevision._source.changes | orderBy: 'startPosition'">
+											<td>{{change.significanceLevel}}</td>
+											<td>{{change.type}}</td>
+											<td>{{change.changeType}}</td>
+											<td>{{change.startPosition}}</td>
+											<td>{{change.endPosition}}</td>
+											<td>{{change.codeEntityType}}</td>
+											<td><pre>{{ change.content }}</pre></td>
+											<td><pre>{{ change.newContent }}</pre></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</ul>
+	</div>
+
+</div>
