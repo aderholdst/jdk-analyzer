@@ -19,6 +19,14 @@
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
+    
+    <repositories>
+		<repository>
+			<id>tmatesoft</id>
+			<name>your custom repo</name>
+			<url>http://maven.tmatesoft.com/content/repositories/releases/</url>
+		</repository>
+	</repositories>
 
     <properties>
         <assertj-core.version>3.1.0</assertj-core.version>
