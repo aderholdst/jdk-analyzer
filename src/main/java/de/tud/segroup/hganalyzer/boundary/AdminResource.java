@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +30,15 @@ public class AdminResource {
 	
 	@Autowired
 	private FileRevisionRepository fileRevisionRepository;
+	
+	@Value("${repository.location}")
+    private String repositoryLocation;
 
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
 	public void importFilesFromRepository() {
 		logger.info("Beginning import of files");
 		prepareImport();
-		HgRepositoryFacade hgRepositoryFacade = new HgRepositoryFacade("C:\\dev-data\\jdk7u\\jdk\\");
+		HgRepositoryFacade hgRepositoryFacade = new HgRepositoryFacade(repositoryLocation);
 		Set<Path> managedFiles = hgRepositoryFacade.listAllManagedFiles();
 		//PathGlobMatcher globMatcher = new PathGlobMatcher("src/share/classes/com/sun/beans/finder/**/*.java");
 		PathGlobMatcher globMatcher = new PathGlobMatcher("src/**/*.java");
@@ -50,7 +54,7 @@ public class AdminResource {
 	}
 
 	private void prepareImport() {
-		this.fileRevisionRepository.deleteAll();
+		//this.fileRevisionRepository.deleteAll();
 		File f = new File(Constants.DIRECTORY_WORK);
 		try {
 			if(f.exists()){

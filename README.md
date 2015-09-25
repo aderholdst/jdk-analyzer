@@ -1,6 +1,8 @@
 # Voraussetzungen
 
 * NodeJS ist installiert (NodeJS Installer)
+** npm install -g grunt-cli
+** npm install -g bower
 * Maven ist installiert und im Path vorhanden
 * Elasticsearch:
 ** Download der aktuellen Version
