@@ -93,6 +93,9 @@ public class HgRepositoryFacade {
 			// Extract Information out of Changeset
 			RawChangeset changeset = repository.getChangelog().changeset(
 					hgRevisionMap.revision(csetIndex));
+			logger.info("Changeset: {}",changeset);
+			//4c3d38927a26
+			
 			fileRevision.setComment(changeset.comment());
 			fileRevision.setDate(changeset.date());
 			fileRevision.setBranch(changeset.branch());

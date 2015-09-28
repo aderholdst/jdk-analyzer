@@ -13,18 +13,18 @@ angular
 					vm.query = {
 						searchText : '*'
 					}
-					
+
 					vm.editorOptions = {
-							lineWrapping : true,
-							lineNumbers : true,
-							readOnly : 'nocursor',
-							mode : 'text/x-java'
+						lineWrapping : true,
+						lineNumbers : true,
+						readOnly : 'nocursor',
+						mode : 'text/x-java'
 					};
-					
+
 					vm.search = search;
 					vm.clearCriteria = clearCriteria;
 					vm.focusCriteria = focusCriteria;
-					
+
 					activate();
 
 					// //////////
@@ -35,11 +35,12 @@ angular
 
 					function search() {
 						var currentQuery = vm.query;
+						vm.elasticQuery =  buildQuery(vm.query);
 						FileRevision.search({
 							index : index_cc_results,
 							size : 40,
 							body : {
-								"query" : buildQuery(vm.query),
+								"query" : vm.elasticQuery,
 								"sort" : [ {
 									"date" : {
 										"order" : "desc"
@@ -86,10 +87,20 @@ angular
 								}
 							})
 						}
+						if (jsonQuery.comment) {
+							var tokens = jsonQuery.comment.split(' ');
+							vm.commentTokens = tokens;
+							tokens.forEach(function(token){
+								query.bool.must.push({
+									"wildcard" : {
+										"comment" : token.toLowerCase() + '*'
+								}});
+							});
+						}
 						if (jsonQuery.changesetRevision) {
 							query.bool.must
 									.push({
-										"term" : {
+										"wildcard" : {
 											"file-revision.changesetRevision" : jsonQuery.changesetRevision
 										}
 									})
@@ -109,7 +120,5 @@ angular
 						}
 						search();
 					}
-
-					
 
 				});

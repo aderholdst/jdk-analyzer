@@ -40,8 +40,8 @@ public class AdminResource {
 		prepareImport();
 		HgRepositoryFacade hgRepositoryFacade = new HgRepositoryFacade(repositoryLocation);
 		Set<Path> managedFiles = hgRepositoryFacade.listAllManagedFiles();
-		//PathGlobMatcher globMatcher = new PathGlobMatcher("src/share/classes/com/sun/beans/finder/**/*.java");
-		PathGlobMatcher globMatcher = new PathGlobMatcher("src/**/*.java");
+		PathGlobMatcher globMatcher = new PathGlobMatcher("src/share/classes/sun/awt/image/IntegerComponentRaster.java");
+		//PathGlobMatcher globMatcher = new PathGlobMatcher("src/**/*.java");
 		for (Path filePath : managedFiles) {
 			if (globMatcher.accept(filePath)) {
 				SourceFile sourceFile = new SourceFile(filePath.toString());

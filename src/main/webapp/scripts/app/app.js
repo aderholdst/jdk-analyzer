@@ -2,7 +2,8 @@
 
 angular.module('hganalyzerApp', [
                'ui.bootstrap', // for modal dialogs
-    'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'elasticsearch', 'ui.codemirror'])
+    'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'elasticsearch', 'ui.codemirror', 'ngSanitize', 'ui.select'])
+    
 
     .run(function ($rootScope, $location, $window, $http, $state,  ENV, VERSION) {
         $rootScope.ENV = ENV;

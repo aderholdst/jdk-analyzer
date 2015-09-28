@@ -2,7 +2,7 @@ server:
     port: 8080
     
 repository:
-    location: C:\dev-data\jdk7u\jdk\    
+    location: F:\Hg_Data\jdk7u\jdk\    
 
 spring:
     profiles:
